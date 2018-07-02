@@ -1,14 +1,21 @@
+name: apiserver               # API Server的名字
 port: :8888                   # HTTP绑定端口
 runmode: debug                # 开发模式, debug, release, test
-name: apiserver               # API Server的名字
 serverurl: http://127.0.0.1:8888  # pingServer函数请求的API服务器的ip:port
 
 log:
   writers: file,stdout
-  logger_level: DEBUG
+  logger_level: DEBUG       # DEBUG, INFO, WARN, ERROR, FATAL
   logger_file: /opt/log/apiserver/apiserver.log
-  log_format_text: false
-  rollingPolicy: size
-  log_rotate_date: 1
-  log_rotate_size: 1
+  log_format_text: false    # true->json，false->plaintext
+  rollingPolicy: size       # size, daily
+  log_rotate_date: 1        # rollingPolicy: daily
+  log_rotate_size: 1        # rollingPolicy: size
   log_backup_count: 7
+
+gormlog: true
+db:
+  name: idea
+  url: 127.0.0.1:3306
+  username: root
+  password: andyadc

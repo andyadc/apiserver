@@ -2,13 +2,16 @@ package main
 
 import (
 	"apiserver/config"
+	"apiserver/model"
 	"apiserver/router"
 	"errors"
 	"github.com/gin-gonic/gin"
 	logger "github.com/lexkong/log"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
+	"math/rand"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -18,11 +21,16 @@ var (
 
 func main() {
 
+	// log
 	pflag.Parse()
 
 	if err := config.Init(*cfg); err != nil {
 		panic(err)
 	}
+
+	// db
+	model.DB.Init()
+	defer model.DB.Close()
 
 	// Set gin mode.
 	gin.SetMode(viper.GetString("runmode"))
@@ -47,6 +55,14 @@ func main() {
 			logger.Fatal("The router has no response, or it might took too long to start up.", err)
 		}
 		logger.Info("The router has been deployed successfully.")
+	}()
+
+	go func() {
+		for {
+			r := (rand.Intn(9999999))
+			logger.Info(strconv.Itoa(r))
+			time.Sleep(time.Millisecond)
+		}
 	}()
 
 	logger.Infof("Start to listening the incoming requests on http address: %s", viper.GetString("port"))
