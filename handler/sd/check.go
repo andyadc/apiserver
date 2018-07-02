@@ -79,7 +79,7 @@ func RAMCheck(c *gin.Context) {
 	usedGB := int(v.Used) / GB
 	totalMB := int(v.Total) / MB
 	totalGB := int(v.Total) / GB
-	usedPercent := int(u.UsedPercent)
+	usedPercent := int(v.UsedPercent)
 
 	status := http.StatusOK
 	text := "OK"
