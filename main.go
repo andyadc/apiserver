@@ -38,7 +38,7 @@ func main() {
 	// Create the Gin engine.
 	g := gin.New()
 
-	middlewares := []gin.HandlerFunc{}
+	var middlewares []gin.HandlerFunc
 
 	// Routes.
 	router.Load(
@@ -59,9 +59,9 @@ func main() {
 
 	go func() {
 		for {
-			r := (rand.Intn(9999999))
+			r := rand.Intn(9999999)
 			logger.Info(strconv.Itoa(r))
-			time.Sleep(time.Millisecond)
+			time.Sleep(time.Minute)
 		}
 	}()
 
